@@ -19,6 +19,7 @@
   padding: 12px 23px;
   border-radius: 0 0 3px 3px;
   width: 100%;
+  font-family: 'Roboto', serif;
 } 
 
 @media all and (min-width: 1024px) {
