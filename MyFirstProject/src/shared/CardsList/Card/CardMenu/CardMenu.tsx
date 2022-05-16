@@ -1,8 +1,7 @@
 import React from 'react'
 import { generateId } from '../../../../utils/react/generateRandomIndex'
 import { GenericList } from '../../../GenericList'
-import { ComplainButton } from '../ComplainButton'
-import { HideButton } from '../HideButton'
+import { Icon, EIcon } from '../../../Icon'
 import styles from './cardmenu.css'
 
 const buttonList = [
@@ -10,14 +9,14 @@ const buttonList = [
     As: 'button' as const,
     text: 'Скрыть',
     onClick: () => {},
-    image: <HideButton />,
+    image: <Icon name={EIcon.block} />,
     className: 'itemButton',
   },
   {
     As: 'button' as const,
     text: 'Пожаловаться',
     onClick: () => {},
-    image: <ComplainButton />,
+    image: <Icon name={EIcon.warning} />,
     className: 'itemButton',
   },
   {

@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "cross-env NODE_ENV=development node ./bin/dev.js",
+    "dev": "cross-env NODE_ENV=development CLIENT_ID=AUCfJmkiAb-ulJR98W1J4Q node ./bin/dev.js",
     "build:dev": "cross-env NODE_ENV=development webpack --config webpack.config.js",
     "build:prod": "cross-env NODE_ENV=production webpack --config webpack.config.js",
     "test": "jest"

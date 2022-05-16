@@ -1,9 +1,9 @@
 import React from 'react'
-import { CommentsButton } from '../CommentsButton'
-import { KarmaCounter } from '../KarmaCounter'
-import { SaveButton } from '../SaveButton'
-import { ShareButton } from '../ShareButton'
+import { KarmaCounter } from './KarmaCounter'
+import { SaveButton } from './SaveButton'
+import { ShareButton } from './ShareButton'
 import styles from './controls.css'
+import { CommentsButton } from './CommentsButton'
 
 export function Controls() {
   return (
