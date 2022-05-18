@@ -15,7 +15,8 @@
     "@hot-loader/react-dom": "^17.0.1",
     "@types/classnames": "^2.3.1",
     "@types/enzyme": "^3.10.12",
-    "@types/jest": "^25.1.4",
+    "@types/jest": "^25.2.3",
+    "@types/mocha": "^9.1.1",
     "@types/react": "^18.0.6",
     "@types/react-dom": "^18.0.2",
     "@wojtekmaj/enzyme-adapter-react-17": "^0.6.7",
@@ -43,6 +44,7 @@
     "webpack-node-externals": "^2.5.2"
   },
   "dependencies": {
+    "axios": "^0.27.2",
     "classnames": "^2.3.1",
     "express": "^4.17.1",
     "react": "^16.14.0",
