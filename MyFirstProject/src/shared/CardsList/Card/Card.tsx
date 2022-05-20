@@ -1,17 +1,21 @@
 import React from 'react'
-import { Dropdown } from '../../Dropdown'
 import styles from './card.css'
-import { CardMenu } from './CardMenu'
 import { Controls } from './Controls'
 import { Menu } from './Menu'
 import { Preview } from './Preview'
 import { TextContent } from './TextContent'
 
-export function Card() {
+export function Card({ props }: any) {
   return (
     <li className={styles.card}>
-      <TextContent />
-      <Preview />
+      <TextContent
+        authorName={props.authorName}
+        avatar={props.avatar}
+        date={props.date}
+        title={props.title}
+        view={props.view}
+      />
+      <Preview img={props.img} />
       <Menu />
       <Controls />
     </li>

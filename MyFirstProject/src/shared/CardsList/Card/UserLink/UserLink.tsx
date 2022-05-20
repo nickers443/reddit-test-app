@@ -1,16 +1,19 @@
 import React from 'react'
 import styles from './userlink.css'
 
-export function UserLink() {
+interface IUserLink {
+  avatar: string | undefined
+  authorName: string | null
+}
+
+export function UserLink({ avatar, authorName }: IUserLink) {
+  if (avatar === null)
+    avatar = 'https://www.redditstatic.com/avatars/avatar_default_02_A5A4A4.png'
   return (
     <div className={styles.userLink}>
-      <img
-        className={styles.avatar}
-        src="https://w7.pngwing.com/pngs/78/488/png-transparent-avatar-youtube-person-kahoot-a-roommate-who-plays-with-a-cell-phone-face-head-cartoon.png"
-        alt="avatar"
-      />
+      <img className={styles.avatar} src={avatar} alt="avatar" />
       <a href="#user-url" className={styles.username}>
-        Дмитрий Стремин
+        {authorName}
       </a>
     </div>
   )

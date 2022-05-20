@@ -12,6 +12,11 @@ button {
   padding: 20px 20px 10px;
   display: flex;
   flex-flow: row wrap;
+  margin-bottom: 20px;
+}
+
+.card:last-child {
+  margin-bottom: 0px;
 }
 
 .card>*, .textContent>* {
@@ -32,6 +37,7 @@ button {
     flex-flow: row nowrap;
     max-height: 107px;
     padding: 0 40px;
+    margin-bottom: 40px;
   }
 
   .card>* {
@@ -48,6 +54,7 @@ button {
     padding: 20px 60px;
     max-height: 147px;
     cursor: pointer;
+    margin-bottom: 40px;
   }
 
   .card:hover, .card:focus-within {
