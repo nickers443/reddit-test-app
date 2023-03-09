@@ -26,10 +26,11 @@ interface ITextProps {
   desctopSize?: TSizes
   color?: EColor
   bold?: Boolean
+  hover?: Boolean
 }
 
 export function Text(props: ITextProps) {
-  const {
+  let {
     As = 'span',
     children,
     size,
@@ -38,7 +39,12 @@ export function Text(props: ITextProps) {
     tabletSize,
     color = EColor.black,
     bold = false,
+    hover,
   } = props
+
+  if (hover) {
+    color = EColor.orange
+  }
 
   const classes = classNames(
     styles[`s${size}`],

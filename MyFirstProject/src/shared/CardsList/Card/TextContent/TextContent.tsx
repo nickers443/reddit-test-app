@@ -1,4 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { useTimeStamp } from '../../../../hooks/useTimeStamp'
+import { Post } from '../Post'
 import { UserLink } from '../UserLink'
 import styles from './textcontent.css'
 
@@ -8,6 +10,7 @@ interface ITextContent {
   date: number
   title: string
   view?: number | null
+  postId: string
 }
 
 export function TextContent({
@@ -16,43 +19,32 @@ export function TextContent({
   date,
   title,
   view,
+  postId,
 }: ITextContent) {
-  const month = [
-    'января',
-    'февраля',
-    'марта',
-    'апреля',
-    'мая',
-    'июня',
-    'июля',
-    'августа',
-    'сентября',
-    'октября',
-    'ноября',
-    'декабря',
-  ]
-  const parseDate = new Date(date * 1000)
-  const hour = parseDate.getHours()
-  const minuts = parseDate.getMinutes()
+  const [isModalOpen, setIsModalOpen] = useState(false)
+
+  const [publicationTime] = useTimeStamp(date)
+
   return (
     <div className={styles.textContent}>
       <div className={styles.metaData}>
         <UserLink avatar={avatar} authorName={authorName} />
         <span className={styles.createdAt}>
           <span className={styles.publishedLabel}>опубликовано </span>
-          {hour <= 24
-            ? hour < 1
-              ? `${minuts} минут назад`
-              : `${hour} часов назад`
-            : `${parseDate.getDay()} ${
-                month[parseDate.getMonth()]
-              } ${parseDate.getFullYear()}`}
+          {publicationTime}
         </span>
       </div>
       <h2 className={styles.title}>
-        <a href="#post-url" className={styles.postLink}>
+        <a
+          href="#post-url"
+          className={styles.postLink}
+          onClick={() => setIsModalOpen(true)}
+        >
           {title}
         </a>
+        {isModalOpen && (
+          <Post postId={postId} onClose={() => setIsModalOpen(false)} />
+        )}
       </h2>
     </div>
   )

@@ -1,5 +1,4 @@
 import React, { ReactNode } from 'react'
-import styles from './icon.css'
 import {
   BlockIcon,
   CommentIcon,
@@ -9,7 +8,7 @@ import {
   WarningIcon,
 } from '../Icons'
 
-type TSizes = 16 | 20
+type TSizes = 14 | 16 | 20
 
 export enum EIcon {
   block,
@@ -23,9 +22,10 @@ export enum EIcon {
 interface IIcon {
   name: ReactNode
   size?: TSizes
+  hover?: boolean
 }
 
-export function Icon({ name, size = 16 }: IIcon) {
+export function Icon({ name, size = 16, hover = false }: IIcon) {
   if (name === EIcon.block) name = <BlockIcon />
   if (name === EIcon.comment) name = <CommentIcon />
   if (name === EIcon.menu) name = <MenuIcon />
@@ -37,7 +37,7 @@ export function Icon({ name, size = 16 }: IIcon) {
       width={size}
       height={size}
       viewBox={`0 0 ${size} ${size}`}
-      fill="none"
+      fill={hover ? '#CC6633' : '#999999'}
       xmlns="http://www.w3.org/2000/svg"
     >
       {name}

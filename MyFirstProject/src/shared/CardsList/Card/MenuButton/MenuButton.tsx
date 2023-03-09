@@ -1,9 +1,13 @@
 import React from 'react'
 import styles from './menubutton.css'
 
-export function MenuButton() {
+interface IMenuButton {
+  onClick?: () => void
+}
+
+export function MenuButton({ onClick }: IMenuButton) {
   return (
-    <button className={styles.menuButton}>
+    <button className={styles.menuButton} onClick={onClick}>
       <svg
         width="5"
         height="20"

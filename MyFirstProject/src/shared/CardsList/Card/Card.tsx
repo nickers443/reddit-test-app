@@ -14,6 +14,7 @@ export function Card({ props }: any) {
         date={props.date}
         title={props.title}
         view={props.view}
+        postId={props.postId}
       />
       <Preview img={props.img} />
       <Menu />

@@ -1,0 +1,33 @@
+.top {
+  display: flex;
+  align-items: center;
+}
+
+.time {
+  color: var(--grey66);
+  margin-left: 8px;
+}
+
+.text {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+  margin: 8px 0 8px 0;
+}
+
+.liga {
+  background-color: var(--greyD9);
+  padding: 3px 7px;
+  margin-left: 8px;
+}
+
+.bottom {
+  margin-bottom: 25px;
+}
+
+@media all and (min-width: 1024px) {
+  .text,
+  .bottom {
+    padding: 0 0 0 5px;
+  }
+}

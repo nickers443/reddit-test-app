@@ -10,7 +10,7 @@ interface IMenuItemsList {
 export function MenuItemsList({ postId }: IMenuItemsList) {
   return (
     <ul className={styles.menuItemsList}>
-      <li className={styles.menuItem} onClick={() => console.log(postId)}>
+      <li className={styles.menuItem}>
         <Icon name={EIcon.block} />
         <Text mobileSize={12} size={14} color={EColor.black}>
           Скрыть
