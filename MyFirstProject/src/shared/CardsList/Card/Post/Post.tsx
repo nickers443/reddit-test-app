@@ -18,10 +18,7 @@ export function Post(props: IPost) {
 
   useEffect(() => {
     function handleClick(event: MouseEvent) {
-      if (
-        event.target instanceof Node &&
-        !ref.current?.contains(event.target)
-      ) {
+      if (event.target instanceof Node && !ref.current?.contains(event.target)) {
         props.onClose?.()
       }
     }
@@ -39,14 +36,13 @@ export function Post(props: IPost) {
       <h2>Заголовок модалки</h2>
       <div className={styles.content}>
         <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus
-          exercitationem ipsa provident? Illum rerum libero facere doloribus
-          culpa sit, molestias inventore officiis unde maiores dolor, dolorum
-          est corporis? Soluta, molestiae.
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus exercitationem ipsa
+          provident? Illum rerum libero facere doloribus culpa sit, molestias inventore officiis
+          unde maiores dolor, dolorum est corporis? Soluta, molestiae.
         </p>
       </div>
       <CommentSection comments={comments} />
     </div>,
-    root
+    root,
   )
 }

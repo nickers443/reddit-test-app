@@ -13,6 +13,7 @@ import { commentContext } from './shared/context/commentContext'
 
 function AppComponent() {
   const [token] = useToken()
+  console.log(token)
   const [commentValue, setCommentValue] = useState('')
 
   const CommentProvider = commentContext.Provider
@@ -25,8 +26,7 @@ function AppComponent() {
             value={{
               value: commentValue,
               onChange: setCommentValue,
-            }}
-          >
+            }}>
             <Layout>
               <Header />
               <Content>

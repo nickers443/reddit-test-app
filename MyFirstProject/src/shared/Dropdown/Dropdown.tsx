@@ -35,20 +35,16 @@ export function Dropdown({
   return createPortal(
     <div
       className={styles.container}
-      style={{ top: `${position.top}px`, left: `${position.left}px` }}
-    >
+      style={{ top: `${position.top}px`, left: `${position.left}px` }}>
       <div onClick={() => setIsDropdownOpen(!isDropdownOpen)}>{button}</div>
       {isDropdownOpen && (
         <div className={styles.listContainer}>
-          <div
-            className={styles.list}
-            onClick={() => setIsDropdownOpen(!isOpen)}
-          >
+          <div className={styles.list} onClick={() => setIsDropdownOpen(!isOpen)}>
             {children}
           </div>
         </div>
       )}
     </div>,
-    root
+    root,
   )
 }
