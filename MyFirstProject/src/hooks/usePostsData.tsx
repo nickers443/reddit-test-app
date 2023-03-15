@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { useContext, useEffect, useState } from 'react'
-import { tokenContext } from '../shared/context/tokenContext'
+import { useSelector } from 'react-redux'
+import { RootState } from '../store'
 
 interface IPostsData {
   title: string
@@ -24,7 +25,7 @@ export function usePostsData() {
       postView: null,
     },
   ])
-  const token = useContext(tokenContext)
+  const token = useSelector<RootState, string>((state) => state.token)
 
   useEffect(() => {
     axios
@@ -34,23 +35,20 @@ export function usePostsData() {
         },
       })
       .then((resp) => {
-        const postData: Array<IPostsData> = resp.data.data.children.map(
-          (post: any) => {
-            let avatar = null
-            if (post.data.all_awardings.length)
-              avatar = post.data.all_awardings[0].icon_url
-            return {
-              title: post.data.title,
-              author: post.data.author,
-              avatar,
-              img: post.data.thumbnail,
-              date: post.data.created,
-              rating: post.data.score,
-              postId: post.data.id,
-              postView: post.data.view_count,
-            }
+        const postData: Array<IPostsData> = resp.data.data.children.map((post: any) => {
+          let avatar = null
+          if (post.data.all_awardings.length) avatar = post.data.all_awardings[0].icon_url
+          return {
+            title: post.data.title,
+            author: post.data.author,
+            avatar,
+            img: post.data.thumbnail,
+            date: post.data.created,
+            rating: post.data.score,
+            postId: post.data.id,
+            postView: post.data.view_count,
           }
-        )
+        })
         setPosts(postData)
       })
       .catch(console.log)
