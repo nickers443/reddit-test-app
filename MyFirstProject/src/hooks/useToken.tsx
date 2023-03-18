@@ -1,14 +1,12 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { RootState, setToken } from '../store'
+import { RootState, saveToken } from '../store/store'
 
 export function useToken() {
+  const dispatch = useDispatch<any>()
   const token = useSelector<RootState, string>((state) => state.token)
-  const dispatch = useDispatch()
   useEffect(() => {
-    if (window.__token__) {
-      dispatch(setToken(window.__token__))
-    }
+    dispatch(saveToken())
   }, [])
 
   return [token]
