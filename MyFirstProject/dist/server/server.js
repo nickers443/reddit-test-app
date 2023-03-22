@@ -329,7 +329,7 @@ eval("// Exports\nmodule.exports = {\n\t\"top\": \"comment__top--1_y5F\",\n\t\"t
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("\nvar __importDefault = (this && this.__importDefault) || function (mod) {\n    return (mod && mod.__esModule) ? mod : { \"default\": mod };\n};\nObject.defineProperty(exports, \"__esModule\", { value: true });\nexports.CommentForm = void 0;\nvar react_1 = __importDefault(__webpack_require__(/*! react */ \"react\"));\nvar commentform_css_1 = __importDefault(__webpack_require__(/*! ./commentform.css */ \"./src/shared/CardsList/Card/CommentSection/CommentForm/commentform.css\"));\nfunction CommentForm(_a) {\n    var value = _a.value, onChange = _a.onChange, onSubmit = _a.onSubmit;\n    return (react_1.default.createElement(\"form\", { className: commentform_css_1.default.form, onSubmit: onSubmit },\n        react_1.default.createElement(\"textarea\", { className: commentform_css_1.default.input, value: value, onChange: onChange }),\n        react_1.default.createElement(\"button\", { type: \"submit\", className: commentform_css_1.default.button }, \"\\u041A\\u043E\\u043C\\u043C\\u0435\\u043D\\u0442\\u0438\\u0440\\u043E\\u0432\\u0430\\u0442\\u044C\")));\n}\nexports.CommentForm = CommentForm;\n\n\n//# sourceURL=webpack:///./src/shared/CardsList/Card/CommentSection/CommentForm/CommentForm.tsx?");
+eval("\nvar __importDefault = (this && this.__importDefault) || function (mod) {\n    return (mod && mod.__esModule) ? mod : { \"default\": mod };\n};\nObject.defineProperty(exports, \"__esModule\", { value: true });\nexports.CommentForm = void 0;\nvar react_1 = __importDefault(__webpack_require__(/*! react */ \"react\"));\nvar react_hook_form_1 = __webpack_require__(/*! react-hook-form */ \"react-hook-form\");\nvar Text_1 = __webpack_require__(/*! ../../../../Text */ \"./src/shared/Text/index.ts\");\nvar commentform_css_1 = __importDefault(__webpack_require__(/*! ./commentform.css */ \"./src/shared/CardsList/Card/CommentSection/CommentForm/commentform.css\"));\nfunction CommentForm() {\n    var _a;\n    var _b = (0, react_hook_form_1.useForm)({\n        defaultValues: {\n            comment: '',\n        },\n    }), handleSubmit = _b.handleSubmit, control = _b.control, reset = _b.reset, errors = _b.formState.errors;\n    var onSubmit = function (data) {\n        console.log(data, 'submit');\n        reset();\n    };\n    return (react_1.default.createElement(\"form\", { className: commentform_css_1.default.form, onSubmit: handleSubmit(onSubmit) },\n        react_1.default.createElement(react_hook_form_1.Controller, { name: \"comment\", control: control, rules: { minLength: 3 }, render: function (_a) {\n                var _b = _a.field, value = _b.value, ref = _b.ref, onChange = _b.onChange;\n                return (react_1.default.createElement(\"textarea\", { value: value, ref: ref, onChange: onChange, className: commentform_css_1.default.input, \"aria-invalid\": errors.comment ? 'true' : 'false' }));\n            } }),\n        ((_a = errors.comment) === null || _a === void 0 ? void 0 : _a.type) === 'minLength' && (react_1.default.createElement(\"div\", { className: commentform_css_1.default.error },\n            react_1.default.createElement(Text_1.Text, { size: 14, color: Text_1.EColor.orange }, \"\\u041C\\u0438\\u043D\\u0438\\u043C\\u0430\\u043B\\u044C\\u043D\\u0430\\u044F \\u0434\\u043B\\u0438\\u043D\\u043D\\u0430 \\u043A\\u043E\\u043C\\u043C\\u0435\\u043D\\u0442\\u0430\\u0440\\u0438\\u044F \\u0441\\u043E\\u0441\\u0442\\u0430\\u0432\\u043B\\u044F\\u0435\\u0442 3 \\u0441\\u0438\\u043C\\u0432\\u043E\\u043B\\u0430\"))),\n        react_1.default.createElement(\"button\", { type: \"submit\", className: commentform_css_1.default.button }, \"\\u041A\\u043E\\u043C\\u043C\\u0435\\u043D\\u0442\\u0438\\u0440\\u043E\\u0432\\u0430\\u0442\\u044C\")));\n}\nexports.CommentForm = CommentForm;\n\n\n//# sourceURL=webpack:///./src/shared/CardsList/Card/CommentSection/CommentForm/CommentForm.tsx?");
 
 /***/ }),
 
@@ -340,7 +340,7 @@ eval("\nvar __importDefault = (this && this.__importDefault) || function (mod) {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-eval("// Exports\nmodule.exports = {\n\t\"form\": \"commentform__form--3eXBx\",\n\t\"input\": \"commentform__input--3YJ1k\",\n\t\"button\": \"commentform__button--2gxAb\"\n};\n\n\n//# sourceURL=webpack:///./src/shared/CardsList/Card/CommentSection/CommentForm/commentform.css?");
+eval("// Exports\nmodule.exports = {\n\t\"form\": \"commentform__form--3eXBx\",\n\t\"input\": \"commentform__input--3YJ1k\",\n\t\"button\": \"commentform__button--2gxAb\",\n\t\"error\": \"commentform__error--1GFCT\"\n};\n\n\n//# sourceURL=webpack:///./src/shared/CardsList/Card/CommentSection/CommentForm/commentform.css?");
 
 /***/ }),
 
@@ -876,7 +876,7 @@ eval("\nvar __createBinding = (this && this.__createBinding) || (Object.create ?
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("\nvar __importDefault = (this && this.__importDefault) || function (mod) {\n    return (mod && mod.__esModule) ? mod : { \"default\": mod };\n};\nObject.defineProperty(exports, \"__esModule\", { value: true });\nexports.CommentFormContainer = void 0;\nvar react_1 = __importDefault(__webpack_require__(/*! react */ \"react\"));\nvar react_redux_1 = __webpack_require__(/*! react-redux */ \"react-redux\");\nvar store_1 = __webpack_require__(/*! ../../store/store */ \"./src/store/store.ts\");\nvar CommentForm_1 = __webpack_require__(/*! ../CardsList/Card/CommentSection/CommentForm */ \"./src/shared/CardsList/Card/CommentSection/CommentForm/index.ts\");\nfunction CommentFormContainer() {\n    var value = (0, react_redux_1.useSelector)(function (state) { return state.commentText; });\n    var dispatch = (0, react_redux_1.useDispatch)();\n    function handleSubmit(event) {\n        event.preventDefault();\n    }\n    function handleChange(event) {\n        dispatch((0, store_1.updateComment)(event.target.value));\n    }\n    return react_1.default.createElement(CommentForm_1.CommentForm, { value: value, onChange: handleChange, onSubmit: handleSubmit });\n}\nexports.CommentFormContainer = CommentFormContainer;\n\n\n//# sourceURL=webpack:///./src/shared/CommentFormContainer/CommentFormContainer.tsx?");
+eval("\nvar __importDefault = (this && this.__importDefault) || function (mod) {\n    return (mod && mod.__esModule) ? mod : { \"default\": mod };\n};\nObject.defineProperty(exports, \"__esModule\", { value: true });\nexports.CommentFormContainer = void 0;\nvar react_1 = __importDefault(__webpack_require__(/*! react */ \"react\"));\nvar CommentForm_1 = __webpack_require__(/*! ../CardsList/Card/CommentSection/CommentForm */ \"./src/shared/CardsList/Card/CommentSection/CommentForm/index.ts\");\nfunction CommentFormContainer() {\n    return react_1.default.createElement(CommentForm_1.CommentForm, null);\n}\nexports.CommentFormContainer = CommentFormContainer;\n\n\n//# sourceURL=webpack:///./src/shared/CommentFormContainer/CommentFormContainer.tsx?");
 
 /***/ }),
 
@@ -1472,6 +1472,17 @@ eval("module.exports = require(\"react-dom\");\n\n//# sourceURL=webpack:///exter
 /***/ (function(module, exports) {
 
 eval("module.exports = require(\"react-dom/server\");\n\n//# sourceURL=webpack:///external_%22react-dom/server%22?");
+
+/***/ }),
+
+/***/ "react-hook-form":
+/*!**********************************!*\
+  !*** external "react-hook-form" ***!
+  \**********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+eval("module.exports = require(\"react-hook-form\");\n\n//# sourceURL=webpack:///external_%22react-hook-form%22?");
 
 /***/ }),
 
