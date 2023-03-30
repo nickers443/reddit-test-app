@@ -1,9 +1,9 @@
 import axios from 'axios'
-import { useContext, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { RootState } from '../store/store'
 
-interface IPostsData {
+export interface IPostsData {
   title: string
   author: string
   avatar?: string
@@ -14,28 +14,31 @@ interface IPostsData {
   postView: number | null
 }
 
-export function usePostsData() {
-  const [posts, setPosts] = useState<IPostsData[]>([
-    {
-      title: '',
-      author: '',
-      date: 0,
-      rating: 0,
-      postId: '',
-      postView: null,
-    },
-  ])
+export function usePostsData(ref: any) {
+  const [posts, setPosts] = useState<IPostsData[]>([])
+  const [isLoading, setIsLoading] = useState(false)
+  const [errorLoading, setErrorLoading] = useState('')
+  const [after, setAfter] = useState('')
+  const [empty, setEmpty] = useState(true)
   const token = useSelector<RootState, string>((state) => state.token)
 
   useEffect(() => {
-    axios
-      .get('https://oauth.reddit.com/best', {
-        headers: {
-          Authorization: `bearer ${token}`,
-        },
-      })
-      .then((resp) => {
-        const postData: Array<IPostsData> = resp.data.data.children.map((post: any) => {
+    async function load() {
+      setErrorLoading('')
+      setIsLoading(true)
+      setEmpty(false)
+
+      try {
+        const {
+          data: {
+            data: { after, children },
+          },
+        } = await axios.get('https://oauth.reddit.com/rising', {
+          headers: {
+            Authorization: `bearer ${token}`,
+          },
+        })
+        const postData: Array<IPostsData> = children.map((post: any) => {
           let avatar = null
           if (post.data.all_awardings.length) avatar = post.data.all_awardings[0].icon_url
           return {
@@ -49,10 +52,33 @@ export function usePostsData() {
             postView: post.data.view_count,
           }
         })
-        setPosts(postData)
-      })
-      .catch(console.log)
+        setPosts((prev) => prev.concat(...postData))
+        setAfter(after)
+      } catch (error) {
+        setErrorLoading(String(error))
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    const observer = new IntersectionObserver(
+      () => {
+        load()
+      },
+      {
+        rootMargin: '10px',
+      },
+    )
+    if (ref.current) {
+      observer.observe(ref.current)
+    }
+
+    return () => {
+      if (ref.current) {
+        observer.unobserve(ref.current)
+      }
+    }
   }, [token])
 
-  return [posts]
+  return [posts, isLoading, errorLoading, empty]
 }

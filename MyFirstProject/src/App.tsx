@@ -4,7 +4,6 @@ import { Layout } from './shared/Layout'
 import { Content } from './shared/Content'
 import { CardsList } from './shared/CardsList'
 import { Header } from './shared/Header'
-import { PostsContextProvider } from './shared/context/postsContext'
 import { applyMiddleware, legacy_createStore as createStore } from 'redux'
 import { Provider } from 'react-redux'
 import { composeWithDevTools } from '@redux-devtools/extension'
@@ -18,14 +17,12 @@ const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk
 function AppComponent() {
   useToken()
   return (
-    <PostsContextProvider>
-      <Layout>
-        <Header />
-        <Content>
-          <CardsList />
-        </Content>
-      </Layout>
-    </PostsContextProvider>
+    <Layout>
+      <Header />
+      <Content>
+        <CardsList />
+      </Content>
+    </Layout>
   )
 }
 
