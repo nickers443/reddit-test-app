@@ -5,7 +5,7 @@ import styles from './button.css'
 
 interface IButton {
   text: string
-  buttonIcon: ReactNode
+  buttonIcon?: ReactNode
   onClick?: () => void
 }
 
@@ -18,8 +18,7 @@ export function Button({ text, buttonIcon, onClick = NOOP }: IButton) {
       className={styles.button}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
-      onClick={() => onClick()}
-    >
+      onClick={() => onClick()}>
       <Icon name={buttonIcon} size={14} hover={hover} />
       <Text size={14} color={EColor.black} hover={hover}>
         {text}

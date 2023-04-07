@@ -3,3 +3,16 @@
     padding: 40px 0;
   }
 }
+
+.cardList {
+  display: flex;
+  flex-direction: column;
+}
+
+.loadMore {
+  background-color: var(--orange);
+  padding: 15px;
+  border-radius: 8px;
+  width: 300px;
+  align-self: center;
+}
