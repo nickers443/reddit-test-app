@@ -1,5 +1,5 @@
 import axios from 'axios'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { FixedSizeList as List } from 'react-window'
 import InfiniteLoader from 'react-window-infinite-loader'
 import { useSelector } from 'react-redux'
@@ -7,26 +7,24 @@ import { IPostsData } from '../../hooks/usePostsData'
 import { RootState } from '../../store/store'
 import { Card } from './Card/Card'
 import styles from './cardslist.css'
-import { Button } from '../Button'
 
 export function CardsList() {
   const LIMIT = 25
-  const infiniteLoaderRef = useRef(null)
   const [posts, setPosts] = useState<IPostsData[]>([])
   const [isLoading, setIsLoading] = useState(false)
   const [errorLoading, setErrorLoading] = useState('')
   const [nextAfter, setNextAfter] = useState('')
   const [loadCount, setLoadCount] = useState(0)
+  const [showButton, setShowButton] = useState(false)
   const token = useSelector<RootState, string>((state) => state.token)
 
   const isItemLoaded = (index: number) => index < posts.length && posts[index] !== null
 
   async function load() {
-    if (loadCount >= 3) {
-      return
-    }
+    if (showButton) return
     setErrorLoading('')
     setIsLoading(true)
+    setShowButton(false)
 
     try {
       setLoadCount((prev) => prev + 1)
@@ -62,40 +60,40 @@ export function CardsList() {
     } catch (error) {
       setErrorLoading(String(error))
     }
-
     setIsLoading(false)
+  }
+
+  function handleClick() {
+    setShowButton(false)
+    load()
   }
 
   const Row = ({ index, style, data }: any) => {
     const post = data[index]
     return (
-      <>
-        <div className="Row" style={style}>
-          <Card
-            key={post.postId + post.author}
-            props={{
-              authorName: post.author,
-              avatar: post.avatar,
-              img: post.img,
-              date: post.date,
-              view: post.postView,
-              rating: post.rating,
-              title: post.title,
-              postId: post.postId,
-            }}
-          />
-        </div>
-      </>
+      <div className="Row" style={style}>
+        <Card
+          key={post.postId + post.author}
+          props={{
+            authorName: post.author,
+            avatar: post.avatar,
+            img: post.img,
+            date: post.date,
+            view: post.postView,
+            rating: post.rating,
+            title: post.title,
+            postId: post.postId,
+          }}
+        />
+      </div>
     )
   }
 
   useEffect(() => {
     if (!token) return
-
-    if (token && posts.length === 0) {
-      load()
-    }
-  }, [token])
+    if (token && posts.length === 0 && loadCount === 0) load()
+    if (loadCount > 0 && loadCount % 3 === 0) setShowButton(true)
+  }, [token, loadCount])
 
   return (
     <ul className={styles.cardList}>
@@ -108,7 +106,8 @@ export function CardsList() {
           isItemLoaded={isItemLoaded}
           itemCount={Infinity}
           loadMoreItems={load}
-          ref={infiniteLoaderRef}>
+          minimumBatchSize={1}
+          threshold={2}>
           {({ onItemsRendered, ref }) => (
             <>
               <List
@@ -125,8 +124,12 @@ export function CardsList() {
               {errorLoading && (
                 <p style={{ textAlign: 'center', fontSize: '20px' }}>{errorLoading}</p>
               )}
-              {loadCount === 3 && (
-                <button className={styles.loadMore} onClick={() => setLoadCount(0)}>
+              {showButton && (
+                <button
+                  className={styles.loadMore}
+                  onClick={() => {
+                    handleClick()
+                  }}>
                   Загрузить еще...
                 </button>
               )}
