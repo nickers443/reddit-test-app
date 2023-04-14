@@ -1,7 +1,5 @@
 import axios from 'axios'
-import React, { useEffect, useState } from 'react'
-import { FixedSizeList as List } from 'react-window'
-import InfiniteLoader from 'react-window-infinite-loader'
+import React, { useEffect, useState, useRef } from 'react'
 import { useSelector } from 'react-redux'
 import { IPostsData } from '../../hooks/usePostsData'
 import { RootState } from '../../store/store'
@@ -10,24 +8,19 @@ import styles from './cardslist.css'
 
 export function CardsList() {
   const LIMIT = 25
+  const token = useSelector<RootState>((state) => state.token)
   const [posts, setPosts] = useState<IPostsData[]>([])
-  const [isLoading, setIsLoading] = useState(false)
+  const [loading, setLoading] = useState(false)
   const [errorLoading, setErrorLoading] = useState('')
   const [nextAfter, setNextAfter] = useState('')
-  const [loadCount, setLoadCount] = useState(0)
-  const [showButton, setShowButton] = useState(false)
-  const token = useSelector<RootState, string>((state) => state.token)
-
-  const isItemLoaded = (index: number) => index < posts.length && posts[index] !== null
+  const [countOfLoad, setCountOfLoad] = useState(0)
+  const bottomOfList = useRef<HTMLDivElement>(null)
 
   async function load() {
-    if (showButton) return
     setErrorLoading('')
-    setIsLoading(true)
-    setShowButton(false)
+    setLoading(true)
 
     try {
-      setLoadCount((prev) => prev + 1)
       const {
         data: {
           data: { after, children },
@@ -57,21 +50,43 @@ export function CardsList() {
       })
       setPosts((prev) => prev.concat(...postData))
       setNextAfter(after)
+      setCountOfLoad((prevCount) => prevCount + 1)
     } catch (error) {
       setErrorLoading(String(error))
     }
-    setIsLoading(false)
+    setLoading(false)
   }
 
-  function handleClick() {
-    setShowButton(false)
-    load()
-  }
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          load()
+        }
+      },
+      {
+        rootMargin: '100px',
+      },
+    )
 
-  const Row = ({ index, style, data }: any) => {
-    const post = data[index]
-    return (
-      <div className="Row" style={style}>
+    if (bottomOfList.current !== null) {
+      observer.observe(bottomOfList.current)
+    }
+
+    return () => {
+      if (bottomOfList.current !== null) {
+        observer.unobserve(bottomOfList.current)
+      }
+    }
+  }, [bottomOfList.current, nextAfter, token])
+
+  return (
+    <ul className={styles.cardList}>
+      {posts.length === 0 && !loading && !errorLoading && (
+        <div style={{ textAlign: 'center' }}>Нет ни одного поста</div>
+      )}
+
+      {posts.map((post) => (
         <Card
           key={post.postId + post.author}
           props={{
@@ -85,58 +100,18 @@ export function CardsList() {
             postId: post.postId,
           }}
         />
-      </div>
-    )
-  }
+      ))}
 
-  useEffect(() => {
-    if (!token) return
-    if (token && posts.length === 0 && loadCount === 0) load()
-    if (loadCount > 0 && loadCount % 3 === 0) setShowButton(true)
-  }, [token, loadCount])
+      {(countOfLoad === 0 || countOfLoad % 3 !== 0) && !errorLoading && <div ref={bottomOfList} />}
 
-  return (
-    <ul className={styles.cardList}>
-      {posts.length === 0 && !errorLoading && !isLoading && (
-        <p style={{ textAlign: 'center', fontSize: '20px' }}>Список пуст</p>
+      {!loading && !errorLoading && countOfLoad % 3 === 0 && (
+        <button className={styles.loadMore} onClick={load}>
+          Загрузить еще
+        </button>
       )}
 
-      {posts.length !== 0 && (
-        <InfiniteLoader
-          isItemLoaded={isItemLoaded}
-          itemCount={Infinity}
-          loadMoreItems={load}
-          minimumBatchSize={1}
-          threshold={2}>
-          {({ onItemsRendered, ref }) => (
-            <>
-              <List
-                height={450}
-                width={'auto'}
-                ref={ref}
-                itemData={posts}
-                itemCount={posts.length}
-                itemSize={148}
-                onItemsRendered={onItemsRendered}>
-                {Row}
-              </List>
-              {isLoading && <p style={{ textAlign: 'center', fontSize: '20px' }}>Загрузка....</p>}
-              {errorLoading && (
-                <p style={{ textAlign: 'center', fontSize: '20px' }}>{errorLoading}</p>
-              )}
-              {showButton && (
-                <button
-                  className={styles.loadMore}
-                  onClick={() => {
-                    handleClick()
-                  }}>
-                  Загрузить еще...
-                </button>
-              )}
-            </>
-          )}
-        </InfiniteLoader>
-      )}
+      {loading && <div style={{ textAlign: 'center' }}>Загрузка...</div>}
+      {errorLoading && <div style={{ textAlign: 'center' }}>{errorLoading}</div>}
     </ul>
   )
 }
