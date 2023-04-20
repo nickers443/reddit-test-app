@@ -1,29 +1,26 @@
 import React, { useEffect, useRef } from 'react'
 import { createPortal } from 'react-dom'
 import { useCommentsData } from '../../../../hooks/useCommentsData'
+import { useNavigate } from 'react-router-dom'
 import CommentSection from '../CommentSection/CommentSection'
 import styles from './post.css'
 
 interface IPost {
-  onClose?: () => void
-  postId: string
+  postId?: string
 }
 
 export function Post(props: IPost) {
   const ref = useRef<HTMLDivElement>(null)
-
-  const id = props.postId
-
-  const [comments] = useCommentsData(id)
+  const [comments] = useCommentsData(props.postId)
+  const navigate = useNavigate()
 
   useEffect(() => {
     function handleClick(event: MouseEvent) {
       if (event.target instanceof Node && !ref.current?.contains(event.target)) {
-        props.onClose?.()
+        navigate('/')
       }
     }
     document.addEventListener('click', handleClick)
-
     return () => {
       document.removeEventListener('click', handleClick)
     }
@@ -33,7 +30,7 @@ export function Post(props: IPost) {
   if (!root) return null
   return createPortal(
     <div className={styles.modal} ref={ref}>
-      <h2>Заголовок модалки</h2>
+      <h2>{'123123'}</h2>
       <div className={styles.content}>
         <p>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus exercitationem ipsa

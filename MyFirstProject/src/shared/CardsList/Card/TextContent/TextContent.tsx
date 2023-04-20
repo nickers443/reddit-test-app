@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useTimeStamp } from '../../../../hooks/useTimeStamp'
-import { Post } from '../Post'
 import { UserLink } from '../UserLink'
 import styles from './textcontent.css'
+import { Link } from 'react-router-dom'
 
 interface ITextContent {
   authorName: string
@@ -13,16 +13,7 @@ interface ITextContent {
   postId: string
 }
 
-export function TextContent({
-  authorName,
-  avatar,
-  date,
-  title,
-  view,
-  postId,
-}: ITextContent) {
-  const [isModalOpen, setIsModalOpen] = useState(false)
-
+export function TextContent({ authorName, avatar, date, title, view, postId }: ITextContent) {
   const [publicationTime] = useTimeStamp(date)
 
   return (
@@ -35,16 +26,9 @@ export function TextContent({
         </span>
       </div>
       <h2 className={styles.title}>
-        <a
-          href="#post-url"
-          className={styles.postLink}
-          onClick={() => setIsModalOpen(true)}
-        >
+        <Link to="/posts/1" className={styles.postLink}>
           {title}
-        </a>
-        {isModalOpen && (
-          <Post postId={postId} onClose={() => setIsModalOpen(false)} />
-        )}
+        </Link>
       </h2>
     </div>
   )

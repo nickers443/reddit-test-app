@@ -23,7 +23,7 @@ export function Card({ props }: any) {
     default:
       image = props.img
   }
-  console.log(image)
+
   return (
     <li className={styles.card}>
       <TextContent
@@ -34,7 +34,7 @@ export function Card({ props }: any) {
         view={props.view}
         postId={props.postId}
       />
-      <Preview img={props.img} />
+      <Preview img={image} />
       <Menu />
       <Controls />
     </li>

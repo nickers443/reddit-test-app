@@ -1,4 +1,3 @@
-import { useEffect } from 'react'
 import { Action, ActionCreator, Reducer } from 'redux'
 import { ThunkAction } from 'redux-thunk'
 import {
