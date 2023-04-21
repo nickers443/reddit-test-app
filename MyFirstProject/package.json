@@ -4,13 +4,17 @@
   "version": "1.0.0",
   "description": "",
   "main": "webpack.config.js",
+  "engines": {
+    "node": "14.x"
+  },
   "scripts": {
     "predeploy": "npm run build:dev",
     "deploy": "gh-pages -d build:dev",
     "build:dev": "cross-env NODE_ENV=development webpack --config webpack.config.js",
-    "build:prod": "cross-env NODE_ENV=production webpack --config webpack.config.js",
-    "dev": "cross-env NODE_ENV=development CLIENT_ID=AUCfJmkiAb-ulJR98W1J4Q node ./bin/dev.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "cross-env NODE_ENV=production webpack --config webpack.config.js",
+    "dev": "cross-env NODE_ENV=development CLIENT_ID=AUCfJmkiAb-ulJR98W1J4Q SECRET='MxqgpjsFvHU27UefnxMduNKi1DwIpQ' node ./bin/dev.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "env CLIENT_ID=AUCfJmkiAb-ulJR98W1J4Q SECRET='MxqgpjsFvHU27UefnxMduNKi1DwIpQ' node ./dist/server/server.js"
   },
   "author": "",
   "license": "ISC",
@@ -33,9 +37,7 @@
     "react-window-infinite-loader": "^1.0.8",
     "redux": "^4.2.1",
     "redux-thunk": "^2.4.2",
-    "webpack-node-externals": "^3.0.0"
-  },
-  "devDependencies": {
+    "webpack-node-externals": "^3.0.0",
     "@hot-loader/react-dom": "^17.0.2",
     "@types/jest": "^28.1.6",
     "@types/react-dom": "^18.0.11",
